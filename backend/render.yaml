@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: ascendra-backend
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && playwright install chromium && playwright install-deps chromium"
+    startCommand: "uvicorn api:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: LINKEDIN_EMAIL
+        sync: false
+      - key: LINKEDIN_PASSWORD
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: YOUTUBE_API_KEY
+        sync: false
+      - key: HUNTER_API_KEY
+        sync: false
+      - key: LINKEDIN_MAX_CONNECTIONS_PER_DAY
+        value: "20"
+      - key: LINKEDIN_MAX_MESSAGES_PER_DAY
+        value: "20"
+      - key: LINKEDIN_DELAY_SECONDS
+        value: "4.0"
+      - key: PYTHON_VERSION
+        value: "3.11.9"

@@ -1,148 +1,74 @@
-# Ascendra — Personal Testing Guide
-### Rise Without Limits · Groq Edition (100% Free)
+# Ascendra 🔺
+### *Rise Without Limits*
+
+> Autonomous AI Career Intelligence Platform — Land your dream job with zero manual effort.
+
+**Stack:** Next.js 14 · Expo React Native · FastAPI · Groq (free LLM)  
+**Deploy:** Vercel (web) + Render (backend) — both free tiers
 
 ---
 
-## Step 1 — Get Your Groq API Key (2 minutes, free, no card)
-
-1. Go to **https://console.groq.com/keys**
-2. Sign up (free) → Create API Key
-3. Copy the key — it starts with `gsk_...`
-
----
-
-## Step 2 — Configure Your Credentials
+## Quick Start (Local)
 
 ```bash
+# 1. Backend
 cd backend
-cp .env.example .env
-```
+cp .env.example .env        # fill in your keys
+pip install -r requirements.txt
+playwright install chromium
+python api.py               # → http://localhost:8000
 
-Open `backend/.env` and fill in:
-
-```env
-# REQUIRED — Groq (free AI)
-GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-# REQUIRED — Your LinkedIn login
-LINKEDIN_EMAIL=your@email.com
-LINKEDIN_PASSWORD=yourpassword
-
-# REQUIRED for emails — Gmail App Password
-# Get at: myaccount.google.com → Security → App Passwords → Generate
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your@gmail.com
-SMTP_PASS=xxxx-xxxx-xxxx-xxxx
-
-# OPTIONAL (leave blank for now)
-YOUTUBE_API_KEY=
-HUNTER_API_KEY=
-```
-
----
-
-## Step 3 — Start the Backend
-
-**Mac / Linux:**
-```bash
-cd backend
-chmod +x start.sh
-./start.sh
-```
-
-**Windows:**
-```
-Double-click backend/start.bat
-```
-
-You'll see:
-```
-✅  groq
-✅  linkedin
-✅  smtp
-```
-
----
-
-## Step 4 — Start the Web App
-
-Open a second terminal:
-
-```bash
+# 2. Web
 cd web
-cp .env.example .env.local   # no keys needed — AI runs in backend
+cp .env.example .env.local  # NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 npm install
-npm run dev
-```
+npm run dev                 # → http://localhost:3000
 
-Open **http://localhost:3000** in your browser.
-
----
-
-## Step 5 — Test It
-
-Try these in the chat:
-
-```
-"What is Ascendra and what can you do for me?"
-```
-```
-"I know HTML, CSS, JavaScript and React basics.
- My goal is to get a job as a frontend developer at a product company.
- Tell me exactly what to do next."
-```
-```
-"Connect me with 5 HRs in Bangalore hiring React developers"
-```
-```
-"Draft a cold email to Priya Sharma at Razorpay about my frontend profile"
-```
-
----
-
-## Step 6 — Mobile App (Optional)
-
-```bash
+# 3. Mobile (optional)
 cd mobile
 npm install
 npx expo start
 ```
 
-Scan the QR code with **Expo Go** (iOS/Android).
+## Deploy to Production
 
-For real device: change `BACKEND_URL` in
-`mobile/src/lib/constants.ts` to your PC's local IP:
-```
-http://192.168.x.x:8000
-```
+👉 **See [DEPLOY.md](./DEPLOY.md) for the complete step-by-step guide**
+
+**GitHub → Render (backend) + Vercel (web)**
 
 ---
 
-## How LinkedIn & Gmail Actually Work
+## Features
 
-| Integration | How | What you provide |
-|------------|-----|-----------------|
-| LinkedIn | Logs in AS YOU via unofficial API + stealth Playwright | Email + password in `.env` |
-| Gmail | Sends FROM your Gmail via SMTP | Gmail App Password in `.env` |
-
-**Your credentials stay 100% on your machine.** Nothing is sent to any third-party.
-
-**LinkedIn safety defaults:**
-- Max 20 connections/day (conservative for testing)
-- 4-second delay between actions
-- Every bulk action shows a HITL preview first
+| | Feature |
+|-|---------|
+| 🤝 | Auto-connect with HRs and hiring managers (HITL-gated) |
+| 📧 | Cold email engine — finds HR emails + sends directly |
+| 📄 | ATS-Semantic resume builder (NLP keyword alignment) |
+| 🗺️ | Career roadmaps and skill gap analysis |
+| 📝 | LinkedIn post automation with anti-bot stealth |
+| 🛡️ | Human-in-the-Loop — review everything before it sends |
+| 🚫 | Content moderation — blocks unethical/harmful requests |
+| 🎓 | Free course finder with YouTube-validated links |
+| 🤖 | Powered by Groq (llama-3.3-70b) — 100% free, no billing |
 
 ---
 
-## Groq Free Tier Limits
+## Environment Variables
 
-| Limit | Value |
-|-------|-------|
-| Requests/minute | 30 |
-| Requests/day | 14,400 |
-| Model | llama-3.3-70b-versatile |
-| Cost | $0 forever (no billing) |
+**Backend (`backend/.env`):**
+```
+GROQ_API_KEY=gsk_...          # console.groq.com/keys — free
+LINKEDIN_EMAIL=your@email.com
+LINKEDIN_PASSWORD=yourpassword
+SMTP_USER=your@gmail.com
+SMTP_PASS=xxxx-xxxx-xxxx-xxxx # Gmail App Password
+```
+
+**Web (`web/.env.local`):**
+```
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+```
 
 ---
 
@@ -150,47 +76,25 @@ http://192.168.x.x:8000
 
 ```
 ascendra/
-├── backend/         FastAPI + all career tools (start this first)
-│   ├── api.py       Main server (Groq-powered chat + all endpoints)
-│   ├── .env         YOUR credentials (never commit this)
-│   └── server/
-│       ├── config.py
-│       └── tools/
-│           ├── linkedin_tools.py   (anti-bot stealth layer)
-│           ├── email_tools.py
-│           ├── resume_tools.py     (ATS-Semantic Engine)
-│           ├── career_tools.py
-│           └── content_tools.py
+├── backend/          FastAPI + all career tools
+│   ├── api.py        Main server (Groq chat + endpoints)
+│   ├── build.sh      Render build script (installs Playwright)
+│   ├── render.yaml   Render deployment config
+│   └── server/tools/ LinkedIn, Email, Resume, Career, Content
 │
-├── web/             Next.js 14 chatbot (deploy to Vercel)
-│   ├── app/
-│   │   ├── page.tsx         Landing page
-│   │   ├── chat/page.tsx    Chat UI
-│   │   └── api/chat/        Proxies to backend (no Anthropic key)
-│   └── components/
+├── web/              Next.js 14 chatbot
+│   ├── app/page.tsx  Landing page
+│   ├── app/chat/     Chat interface
+│   └── vercel.json   Vercel deployment config
 │
-└── mobile/          Expo React Native (iOS + Android)
-    └── app/
-        ├── index.tsx    Landing screen
-        └── chat.tsx     Chat screen
+├── mobile/           Expo React Native (iOS + Android)
+├── srs/              Software Requirements Specification v2.0
+├── DEPLOY.md         Full deployment guide ← READ THIS
+└── .github/workflows/ CI/CD pipelines
 ```
 
 ---
 
-## Deploy to Production (after testing)
+⚠️ LinkedIn automation may violate LinkedIn's ToS. Use responsibly. All bulk actions require HITL approval. Personal use only.
 
-**Web → Vercel (free):**
-```bash
-cd web && npx vercel deploy
-# Set env var: NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.com
-```
-
-**Backend → Railway (free tier):**
-- Connect GitHub repo
-- Root Directory: `backend`
-- Start Command: `python api.py`
-- Add all `.env` variables in Railway dashboard
-
----
-
-*Ascendra v2.0 · Groq Edition · Personal Testing Mode*
+*Ascendra v2.0 · Groq Edition*
