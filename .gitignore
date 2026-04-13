@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Credentials (NEVER commit these)
+gmail_credentials.json
+gmail_token.json
+session.json
+*.cookie
+
+# Data (user-specific, never commit)
+backend/server/data/*.json
+backend/server/data/resumes/
+backend/server/data/uploads/
+!backend/server/data/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Expo
+.expo/
+mobile/.expo/
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

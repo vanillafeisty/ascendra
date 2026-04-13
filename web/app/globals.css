@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #d4891e;
+  --gold-light: #e3a33a;
+  --gold-dim: rgba(212, 137, 30, 0.15);
+  --surface-0: #080810;
+  --surface-1: #0d0d18;
+  --surface-2: #121220;
+  --surface-3: #181828;
+  --surface-4: #1e1e30;
+  --surface-5: #252538;
+  --border: rgba(255,255,255,0.06);
+  --border-gold: rgba(212, 137, 30, 0.25);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--surface-0);
+  color: #e8e8f5;
+  font-family: var(--font-body), 'DM Sans', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212,137,30,0.4); }
+
+/* Noise texture overlay */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.35;
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #e3a33a 0%, #d4891e 50%, #b96c14 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-gold { box-shadow: 0 0 40px rgba(212,137,30,0.2), 0 0 80px rgba(212,137,30,0.08); }
+.glow-gold-sm { box-shadow: 0 0 16px rgba(212,137,30,0.25); }
+
+/* Message bubble prose */
+.prose-ascendra {
+  color: #d8d8e8;
+  line-height: 1.75;
+}
+.prose-ascendra p { margin-bottom: 0.75em; }
+.prose-ascendra p:last-child { margin-bottom: 0; }
+.prose-ascendra strong { color: #f0f0ff; font-weight: 600; }
+.prose-ascendra em { color: #c8c8dd; }
+.prose-ascendra code {
+  font-family: var(--font-mono);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.85em;
+  color: #e3a33a;
+}
+.prose-ascendra pre {
+  background: #0d0d1e;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.prose-ascendra pre code { background: none; border: none; padding: 0; color: #e8e8f5; font-size: 0.82em; }
+.prose-ascendra ul, .prose-ascendra ol { padding-left: 1.5em; margin: 8px 0; }
+.prose-ascendra li { margin-bottom: 4px; }
+.prose-ascendra a { color: #e3a33a; text-decoration: underline; text-underline-offset: 3px; }
+.prose-ascendra h1,.prose-ascendra h2,.prose-ascendra h3 { color: #f0f0ff; font-family: var(--font-display); font-weight: 600; margin: 16px 0 8px; }
+.prose-ascendra blockquote { border-left: 3px solid rgba(212,137,30,0.5); padding-left: 12px; color: #a8a8c0; font-style: italic; margin: 8px 0; }
+.prose-ascendra hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 16px 0; }
+.prose-ascendra table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin: 12px 0; }
+.prose-ascendra th { background: rgba(255,255,255,0.05); padding: 8px 12px; text-align: left; font-weight: 600; color: #f0f0ff; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.prose-ascendra td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+/* Animated gradient border */
+.border-gold-animated {
+  position: relative;
+  border-radius: 12px;
+}
+.border-gold-animated::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(212,137,30,0.4), rgba(255,255,255,0.05), rgba(212,137,30,0.2));
+  border-radius: 13px;
+  z-index: -1;
+}
+
+/* Chat input focus ring */
+.chat-input:focus-within {
+  border-color: rgba(212, 137, 30, 0.5);
+  box-shadow: 0 0 0 3px rgba(212, 137, 30, 0.1), 0 4px 24px rgba(0,0,0,0.3);
+}
+
+/* Thinking dots */
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+.thinking-dot:nth-child(1) { animation: blink 1.4s infinite 0s; }
+.thinking-dot:nth-child(2) { animation: blink 1.4s infinite 0.2s; }
+.thinking-dot:nth-child(3) { animation: blink 1.4s infinite 0.4s; }
+
+/* Background grid */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
