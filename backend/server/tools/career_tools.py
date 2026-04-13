@@ -7,7 +7,7 @@ import json
 import re
 import requests
 from typing import Optional
-from config import ANTHROPIC_API_KEY, YOUTUBE_API_KEY
+from config import GROQ_API_KEY, YOUTUBE_API_KEY
 
 
 # ─── Curated Free Courses Database ────────────────────────────────────────────

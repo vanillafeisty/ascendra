@@ -11,7 +11,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
-from config import RESUMES_DIR, load_user_profile, ANTHROPIC_API_KEY
+from config import RESUMES_DIR, load_user_profile, GROQ_API_KEY
 
 
 # ─────────────────────────────────────────────────────────────────────────────
