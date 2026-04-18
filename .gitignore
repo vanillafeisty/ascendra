@@ -1,77 +1,34 @@
-# ── Python ────────────────────────────────────────────────────────────────────
+# Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
-*.pyd
-*.egg-info/
-*.egg
-.Python
-dist/
-build/
-.pytest_cache/
-.mypy_cache/
-venv/
 .venv/
-env/
+venv/
 
-# ── Node / Next.js ────────────────────────────────────────────────────────────
+# Node
 node_modules/
-.pnp
-.pnp.js
 .next/
-out/
-.vercel/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-*.tsbuildinfo
-next-env.d.ts
-
-# ── Expo / React Native ───────────────────────────────────────────────────────
 .expo/
-mobile/.expo/
-mobile/dist/
-web-build/
 
-# ── SECRETS — NEVER commit these ─────────────────────────────────────────────
-.env
-.env.local
-.env.*.local
+# Secrets — NEVER commit
 backend/.env
 *.env
+!.env.example
 gmail_credentials.json
 gmail_token.json
 session.json
-session_cookies.json
 *.cookie
-*.p12
-*.pem
-*.key
 
-# ── User data — stays local ───────────────────────────────────────────────────
+# Data
 backend/server/data/*.json
 backend/server/data/resumes/
 backend/server/data/uploads/
 !backend/server/data/.gitkeep
 
-# ── OS ────────────────────────────────────────────────────────────────────────
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-desktop.ini
 
-# ── IDE ───────────────────────────────────────────────────────────────────────
+# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-*.sublime-project
-*.sublime-workspace
-
-# ── Logs ──────────────────────────────────────────────────────────────────────
-*.log
-logs/

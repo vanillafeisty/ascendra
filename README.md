@@ -1,100 +1,73 @@
-# Ascendra 🔺
-### *Rise Without Limits*
-
-> Autonomous AI Career Intelligence Platform — Land your dream job with zero manual effort.
-
-**Stack:** Next.js 14 · Expo React Native · FastAPI · Groq (free LLM)  
-**Deploy:** Vercel (web) + Render (backend) — both free tiers
+# Ascendra — Local Test Build
+### Beige & Sage Edition · LinkedIn Connected from Your Machine
 
 ---
 
-## Quick Start (Local)
+## Start in 3 steps
 
+### Step 1 — Add credentials
 ```bash
-# 1. Backend
-cd backend
-cp .env.example .env        # fill in your keys
-pip install -r requirements.txt
-playwright install chromium
-python api.py               # → http://localhost:8000
-
-# 2. Web
-cd web
-cp .env.example .env.local  # NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
-npm install
-npm run dev                 # → http://localhost:3000
-
-# 3. Mobile (optional)
-cd mobile
-npm install
-npx expo start
+cp backend/.env.example backend/.env
 ```
-
-## Deploy to Production
-
-👉 **See [DEPLOY.md](./DEPLOY.md) for the complete step-by-step guide**
-
-**GitHub → Render (backend) + Vercel (web)**
-
----
-
-## Features
-
-| | Feature |
-|-|---------|
-| 🤝 | Auto-connect with HRs and hiring managers (HITL-gated) |
-| 📧 | Cold email engine — finds HR emails + sends directly |
-| 📄 | ATS-Semantic resume builder (NLP keyword alignment) |
-| 🗺️ | Career roadmaps and skill gap analysis |
-| 📝 | LinkedIn post automation with anti-bot stealth |
-| 🛡️ | Human-in-the-Loop — review everything before it sends |
-| 🚫 | Content moderation — blocks unethical/harmful requests |
-| 🎓 | Free course finder with YouTube-validated links |
-| 🤖 | Powered by Groq (llama-3.3-70b) — 100% free, no billing |
-
----
-
-## Environment Variables
-
-**Backend (`backend/.env`):**
+Open `backend/.env`:
 ```
-GROQ_API_KEY=gsk_...          # console.groq.com/keys — free
+GROQ_API_KEY=gsk_...          # console.groq.com/keys (free)
 LINKEDIN_EMAIL=your@email.com
 LINKEDIN_PASSWORD=yourpassword
 SMTP_USER=your@gmail.com
-SMTP_PASS=xxxx-xxxx-xxxx-xxxx # Gmail App Password
+SMTP_PASS=xxxx-xxxx-xxxx-xxxx  # Gmail App Password
 ```
 
-**Web (`web/.env.local`):**
+### Step 2 — Start everything
+**Mac/Linux:**
+```bash
+chmod +x start_local.sh
+./start_local.sh
 ```
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+**Windows:** double-click `start_local.bat`
+
+### Step 3 — Test LinkedIn is working
+Open in browser: **http://localhost:8000/api/linkedin/test**
+
+You should see:
+```json
+{
+  "connected": true,
+  "message": "✅ LinkedIn connected as: Your Name",
+  "profile": { "name": "...", "headline": "...", "connections": 500 }
+}
 ```
+
+The chat UI also shows a **LinkedIn status pill** in the sidebar — green = working.
 
 ---
 
-## Project Structure
+## URLs
 
-```
-ascendra/
-├── backend/          FastAPI + all career tools
-│   ├── api.py        Main server (Groq chat + endpoints)
-│   ├── build.sh      Render build script (installs Playwright)
-│   ├── render.yaml   Render deployment config
-│   └── server/tools/ LinkedIn, Email, Resume, Career, Content
-│
-├── web/              Next.js 14 chatbot
-│   ├── app/page.tsx  Landing page
-│   ├── app/chat/     Chat interface
-│   └── vercel.json   Vercel deployment config
-│
-├── mobile/           Expo React Native (iOS + Android)
-├── srs/              Software Requirements Specification v2.0
-├── DEPLOY.md         Full deployment guide ← READ THIS
-└── .github/workflows/ CI/CD pipelines
-```
+| | URL |
+|-|-----|
+| **Web UI** | http://localhost:3000 |
+| **API Docs** | http://localhost:8000/docs |
+| **LinkedIn Test** | http://localhost:8000/api/linkedin/test |
+| **Health Check** | http://localhost:8000/api/health |
 
 ---
 
-⚠️ LinkedIn automation may violate LinkedIn's ToS. Use responsibly. All bulk actions require HITL approval. Personal use only.
+## Design
 
-*Ascendra v2.0 · Groq Edition*
+New UI: **beige + sage green + warm brown** — clean, minimal, professional.
+- Background: warm cream `#F7F3EE`
+- Accent: sage green `#7D9B76`
+- Typography: Playfair Display + DM Sans
+
+---
+
+## Why LinkedIn works locally but not on Render
+
+| | Local | Render |
+|-|-------|--------|
+| IP address | Your home IP ✅ | AWS data center ❌ |
+| Browser session | Persistent ✅ | Wiped on restart ❌ |
+| LinkedIn detection | Looks human ✅ | Flagged as bot ❌ |
+
+**Architecture:** Groq AI chat lives on Render. LinkedIn/Gmail actions run locally.
